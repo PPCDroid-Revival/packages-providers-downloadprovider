@@ -23,6 +23,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.drm.mobile1.DrmRawContent;
+import android.net.ethernet.EthernetNative;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -472,6 +473,7 @@ public class Helpers {
         if (connectivity == null) {
             Log.w(Constants.TAG, "couldn't get connectivity manager");
         } else {
+            String address = EthernetNative.getEthernetAddress();
             NetworkInfo[] info = connectivity.getAllNetworkInfo();
             if (info != null) {
                 for (int i = 0; i < info.length; i++) {
@@ -482,6 +484,12 @@ public class Helpers {
                         return true;
                     }
                 }
+            }
+            if (EthernetNative.getEthernetStatus() && !address.equals("0.0.0.0")) {
+                if (Constants.LOGVV) {
+                    Log.v(Constants.TAG, "network is available");
+                }
+                return true;
             }
         }
         if (Constants.LOGVV) {
