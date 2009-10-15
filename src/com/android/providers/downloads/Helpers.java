@@ -473,7 +473,7 @@ public class Helpers {
         if (connectivity == null) {
             Log.w(Constants.TAG, "couldn't get connectivity manager");
         } else {
-            String address = EthernetNative.getEthernetAddress();
+            String address = EthernetNative.getIPAddressAsString();
             NetworkInfo[] info = connectivity.getAllNetworkInfo();
             if (info != null) {
                 for (int i = 0; i < info.length; i++) {
@@ -485,7 +485,7 @@ public class Helpers {
                     }
                 }
             }
-            if (EthernetNative.getEthernetStatus() && !address.equals("0.0.0.0")) {
+            if (EthernetNative.isLinkUp() && !address.equals("0.0.0.0")) {
                 if (Constants.LOGVV) {
                     Log.v(Constants.TAG, "network is available");
                 }
